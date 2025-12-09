@@ -81,6 +81,12 @@ You can visualize the grid and its evolution using matplotlib. See `notebook.ipy
 
 The `compute_entropy` function in `utils.py` computes the entropy of the grid, useful for analyzing the system's evolution.
 
+### Boundary Conditions
+The grid supports various boundary conditions:
+- `fixed`: Cells outside the grid are always dead.
+- `periodic`: The grid wraps around (toroidal).
+- `reflective`: Edges reflect the state of the nearest cell.
+
 ## Testing
 
 Run all unit tests with:
