@@ -109,7 +109,3 @@ class MY_PATTERN(Pattern):
 - `run_simulation.py` — Example simulation script
 - `tests.py` — Unit tests
 - `notebook.ipynb` — Interactive analysis
-
-## License
-
-This project is open source and available under the MIT License.
