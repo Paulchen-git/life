@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from Patterns import AVAILABLE_PATTERNS, Pattern, load_pattern, random_grid
+from utils import get_neighbors
 
 class Grid:
     """Class representing the grid for Conway's Game of Life.
@@ -20,6 +21,7 @@ class Grid:
             length: int, 
             width: int, 
             seed: int=42, 
+            boundary_conditions: str="periodic",
             pattern: Type[Pattern]=None
     ) -> None:
         """Initialize the grid with given dimensions, random seed, and optional
@@ -41,6 +43,7 @@ class Grid:
         self.length = length
         self.width = width
         self.seed = seed
+        self.boundary_conditions = boundary_conditions
         np.random.seed(self.seed)
         self.__initialize_grid(pattern)
 
@@ -131,39 +134,13 @@ class Grid:
         plt.imsave(filepath, display_array, cmap='binary')
 
 
-    def __get_neighbors(self, x, y) -> list[int]:
-        """Get the states of all neighbor cells of cell (x, y).
-
-        Parameters
-        ----------
-        x : int
-            row of the given cell
-        y : int
-            column of the given cell
-
-        Returns
-        -------
-        list[int]
-            A list that contains the states of the neighbor cells.
-        """
-
-        neighbors = []
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if i == 0 and j == 0:
-                    continue
-                ni, nj = (x + i) % self.width, (y + j) % self.length
-                neighbors.append(self.grid[ni][nj].state)
-        return neighbors
-
-
     def update_grid(self) -> None:
         """Update the grid by updating the state of every cells."""
 
         new_states = np.zeros((self.width, self.length))
         for i in range(self.width):
             for j in range(self.length):
-                neighbors = self.__get_neighbors(i, j)
+                neighbors = get_neighbors(self, i, j)
                 new_states[i][j] = self.grid[i][j].compute_next_state(neighbors)
         for i in range(self.width):
             for j in range(self.length):
