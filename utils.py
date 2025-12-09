@@ -58,14 +58,6 @@ def get_neighbors(grid, x, y):
                 else:
                     neighbors.append(0)  # Out of bounds treated as dead cell
         return neighbors
-    elif boundary_conditions == "periodic":
-        for i in range(-1, 2):
-            for j in range(-1, 2):
-                if i == 0 and j == 0:
-                    continue
-                ni, nj = (x + i) % grid.width, (y + j) % grid.length
-                neighbors.append(grid.grid[ni][nj].state)
-        return neighbors
     elif boundary_conditions == "reflective":
         for i in range(-1, 2):
             for j in range(-1, 2):
@@ -82,7 +74,7 @@ def get_neighbors(grid, x, y):
                     nj = grid.length - 1
                 neighbors.append(grid.grid[ni][nj].state)
         return neighbors
-    elif boundary_conditions == "toroidal":
+    elif boundary_conditions == "toroidal" or boundary_conditions == "periodic":
         for i in range(-1, 2):
             for j in range(-1, 2):
                 if i == 0 and j == 0:

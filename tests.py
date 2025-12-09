@@ -13,7 +13,7 @@ import numpy as np
 from Cell import Cell
 from Grid import Grid
 from Patterns import AVAILABLE_PATTERNS, Pattern, load_pattern, random_grid
-from utils import compute_entropy
+from utils import compute_entropy, get_neighbors
 
 
 class TestCell(unittest.TestCase):
@@ -114,10 +114,6 @@ class TestGrid(unittest.TestCase):
 		after = grid.get_grid()
 		self.assertTrue(np.array_equal(before, after))  # Block is stable
 
-	def test_get_neighbors(self):
-		grid = Grid(3, 3, pattern='block')
-		neighbors = grid._Grid__get_neighbors(1, 1)
-		self.assertEqual(len(neighbors), 8)
 
 class TestUtils(unittest.TestCase):
 	def test_entropy_all_dead(self):
@@ -137,6 +133,11 @@ class TestUtils(unittest.TestCase):
 		grid = Grid(3, 3, pattern=pattern)
 		entropy = compute_entropy(grid)
 		self.assertTrue(entropy > 0)
+	
+	def test_get_neighbors(self):
+		grid = Grid(3, 3, pattern='block')
+		neighbors = get_neighbors(grid, 1, 1)
+		self.assertEqual(len(neighbors), 8)
 
 if __name__ == '__main__':
 	unittest.main()
