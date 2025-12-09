@@ -35,6 +35,9 @@ class Grid:
             The number of rows in the grid.
         seed : int, optional
             The random seed for reproductibility, by default 42
+        boundary_conditions : str, optional
+            The type of boundary conditions to apply ("fixed", "periodic", 
+            "reflective", "toroidal"), by default "periodic"
         pattern : Type[Pattern], optional
             The pattern to be used to initialize the grid, by default None 
             (random grid)
